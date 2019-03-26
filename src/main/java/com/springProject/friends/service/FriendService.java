@@ -1,7 +1,5 @@
 package com.springProject.friends.service;
 
-import java.util.Optional;
-
 import org.springframework.data.repository.CrudRepository;
 import com.springProject.friends.model.Friend;
 

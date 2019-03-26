@@ -2,18 +2,25 @@ package com.springProject.friends.controller;
 
 import java.util.Optional;
 
+import javax.validation.ValidationException;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.springProject.friends.model.Friend;
 import com.springProject.friends.service.FriendService;
+import com.springProject.friends.util.ErrorMessage;
 
 @RestController
 public class FriendController {
@@ -23,7 +30,16 @@ public class FriendController {
 	
 	@PostMapping("friend")
 	Friend create(@RequestBody Friend friend) {
-		return friendService.save(friend);
+		if(friend.getId() !=0 && friend.getFirstName()!= null && friend.getLastName()!= null)
+			return friendService.save(friend);
+		else
+			throw new ValidationException("friend cann't be created"); 
+	}
+	
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	@ExceptionHandler
+	ErrorMessage exceptionHandler(ValidationException e){
+		return new ErrorMessage("400", e.getMessage());
 	}
 	
 	@GetMapping("friend")
@@ -32,8 +48,11 @@ public class FriendController {
 	}
 	
 	@PutMapping("friend")
-	Friend update(@RequestBody Friend friend) {
-		return friendService.save(friend);
+	ResponseEntity<Friend> update(@RequestBody Friend friend) {
+		if(friendService.findById(friend.getId()).isPresent())
+			return new ResponseEntity<Friend>(friendService.save(friend), HttpStatus.OK);
+		else
+		return new ResponseEntity<Friend>(friend, HttpStatus.BAD_REQUEST);
 	}
 	
 	@DeleteMapping("friend/{id}")
