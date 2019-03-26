@@ -1,6 +1,11 @@
 HELP.md
+### Java ###
+*.class
+
 .gradle
 /build/
+bin/
+target/
 !gradle/wrapper/gradle-wrapper.jar
 
 ### STS ###
@@ -11,7 +16,6 @@ HELP.md
 .settings
 .springBeans
 .sts4-cache
-*.class
 
 ### IntelliJ IDEA ###
 .idea

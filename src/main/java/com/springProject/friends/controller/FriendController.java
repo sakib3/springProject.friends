@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.springProject.friends.model.Friend;
 import com.springProject.friends.service.FriendService;
-import com.springProject.friends.util.ErrorMessage;
 
 @RestController
 public class FriendController {
@@ -34,12 +33,6 @@ public class FriendController {
 			return friendService.save(friend);
 		else
 			throw new ValidationException("friend cann't be created"); 
-	}
-	
-	@ResponseStatus(HttpStatus.BAD_REQUEST)
-	@ExceptionHandler
-	ErrorMessage exceptionHandler(ValidationException e){
-		return new ErrorMessage("400", e.getMessage());
 	}
 	
 	@GetMapping("friend")
