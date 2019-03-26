@@ -4,6 +4,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 public class Address {
@@ -12,6 +15,9 @@ public class Address {
 	private int id;
 	private String street;
 	private String city;
+	@JsonBackReference
+	@ManyToOne
+	private Friend friend;
 
 	public String getStreet() {
 		return street;
@@ -27,5 +33,13 @@ public class Address {
 
 	public void setCity(String city) {
 		this.city = city;
+	}
+
+	public Friend getFriend() {
+		return friend;
+	}
+
+	public void setFriend(Friend friend) {
+		this.friend = friend;
 	}
 }

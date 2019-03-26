@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
@@ -24,7 +25,8 @@ public class Friend {
 	private int age;
 	@JsonIgnore
 	private boolean married;
-	@OneToMany(cascade = CascadeType.ALL)
+	@JsonManagedReference
+	@OneToMany(mappedBy ="friend", cascade = CascadeType.ALL)
 	private List<Address> addresses;
 
 	public String getFirstName() {
