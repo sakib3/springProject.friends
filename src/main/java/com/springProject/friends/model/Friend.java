@@ -16,6 +16,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
 public class Friend {
+	public Friend() {
+	}
+
+	public Friend(@NotBlank String firstName, String lastName) {
+		this.firstName = firstName;
+		this.lastName = lastName;
+	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
